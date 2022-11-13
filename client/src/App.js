@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
@@ -7,7 +6,12 @@ function App() {
       <div class="container">
         <div id="login">
           <h1>This is an example of the Authorization Code flow</h1>
-          <a href="https://localhost:8888/login" class="btn btn-primary">Log in with Spotify</a>
+          <a
+            href="https://cfa1-207-237-240-65.ngrok.io/login"
+            class="btn btn-primary"
+          >
+            Log in with Spotify
+          </a>
         </div>
         <div id="loggedin">
           <div id="user-profile"></div>

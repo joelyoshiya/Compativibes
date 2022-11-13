@@ -3,22 +3,21 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <body>
+      <div class="container">
+        <div id="login">
+          <h1>This is an example of the Authorization Code flow</h1>
+          <a href="https://localhost:8888/login" class="btn btn-primary">Log in with Spotify</a>
+        </div>
+        <div id="loggedin">
+          <div id="user-profile"></div>
+          <div id="oauth"></div>
+          <button class="btn btn-default" id="obtain-new-token">
+            Obtain new token using the refresh token
+          </button>
+        </div>
+      </div>
+    </body>
   );
 }
 

@@ -49,6 +49,8 @@ export default function App() {
       },
     });
 
+    console.log(data);
+
     setArtists(data.artists.items);
   };
 
@@ -63,7 +65,8 @@ export default function App() {
   Object.keys(params).forEach((key) =>
     urlSearchParams.append(key, params[key])
   );
-  const redirect_uri = AUTH_ENDPOINT + "?" + urlSearchParams.toString();
+  const spotify_auth_redirect_uri =
+    AUTH_ENDPOINT + "?" + urlSearchParams.toString();
 
   // get user info
   const getUserInfo = async () => {
@@ -78,7 +81,7 @@ export default function App() {
       <header className="App-header">
         <h1>Spotify React</h1>
         {!token ? (
-          <a href={redirect_uri}>Login to Spotify</a>
+          <a href={spotify_auth_redirect_uri}>Login to Spotify</a>
         ) : (
           <div>
             <button onClick={logout}>Logout</button>

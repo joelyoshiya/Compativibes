@@ -60,7 +60,7 @@ export default function App() {
     client_id: CLIENT_ID,
     redirect_uri: REDIRECT_URI,
     response_type: RESPONSE_TYPE,
-    scope: "user-read-private user-read-email",
+    scope: "user-read-private user-read-email user-top-read",
   };
   Object.keys(params).forEach((key) =>
     urlSearchParams.append(key, params[key])
@@ -69,11 +69,35 @@ export default function App() {
     AUTH_ENDPOINT + "?" + urlSearchParams.toString();
 
   // get user info
+  // top 10 artists and tracks
   const getUserInfo = async () => {
-    const { data } = await axios.get("https://api.spotify.com/v1/me", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    setUserInfo(data);
+    const userProfile = await axios
+      .get("https://api.spotify.com/v1/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .catch((error) => console.log(error));
+
+    const topArtists = await axios
+      .get("https://api.spotify.com/v1/me/top/artists", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .catch((error) => console.log(error));
+
+    const topTracks = await axios
+      .get("https://api.spotify.com/v1/me/top/tracks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .catch((error) => console.log(error));
+
+    setUserInfo({ userProfile, topArtists, topTracks });
   };
 
   return (

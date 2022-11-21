@@ -77,8 +77,9 @@ export default function App() {
       })
       .catch((error) => console.log(error));
 
-    const topArtists = await axios
+    const topArtistsData = await axios
       .get("https://api.spotify.com/v1/me/top/artists", {
+        params: { limit: 10 },
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
@@ -87,8 +88,13 @@ export default function App() {
       })
       .catch((error) => console.log(error));
 
+    const topArtists = topArtistsData.data.items.map(
+      (artist) => artist["name"]
+    );
+
     const topTracks = await axios
       .get("https://api.spotify.com/v1/me/top/tracks", {
+        params: { limit: 10 },
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",

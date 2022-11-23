@@ -91,9 +91,14 @@ export default function App() {
       })
       .catch((error) => console.log(error));
 
-    const topArtists = topArtistsData.data.items.map(
-      (artist) => artist["name"]
-    );
+    // const topArtists = topArtistsData.data.items.map(
+    //   (artist) => artist["name"]
+    // );
+    const topArtists = topArtistsData.data.items.slice(0, 10).map((artist) => ({
+      aristName: artist.name,
+      artistImage: artist.images[0].url,
+      artistUrl: artist.external_urls.spotify,
+    }));
 
     const topTracksData = await axios
       .get("https://api.spotify.com/v1/me/top/tracks", {
@@ -106,7 +111,12 @@ export default function App() {
       })
       .catch((error) => console.log(error));
 
-    const topTracks = topTracksData.data.items.map((track) => track["name"]);
+    // const topTracks = topTracksData.data.items.map((track) => track["name"]);
+    const topTracks = topTracksData.data.items.slice(0, 10).map((track) => ({
+      title: track.name,
+      artist: track.artists.map((_artist) => _artist.name).join(", "),
+      songUrl: track.external_urls.spotify,
+    }));
 
     // setUserInfo({ userProfile, topArtistsData, topTracksData });
     setUserInfo({ userName, topArtists, topTracks });

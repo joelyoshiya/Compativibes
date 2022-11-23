@@ -2,6 +2,16 @@
   padding: 0 2rem;
 }
 
+.header {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;

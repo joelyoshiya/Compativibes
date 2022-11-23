@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "../styles/App.module.css";
 
 export default function App() {
   const CLIENT_ID = "2f00ead973024ee8bbca49fa896bd640"; // Your client id
@@ -95,7 +96,7 @@ export default function App() {
     //   (artist) => artist["name"]
     // );
     const topArtists = topArtistsData.data.items.slice(0, 10).map((artist) => ({
-      aristName: artist.name,
+      artistName: artist.name,
       artistImage: artist.images[0].url,
       artistUrl: artist.external_urls.spotify,
     }));
@@ -123,19 +124,23 @@ export default function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Spotify React</h1>
-        {!token ? (
-          <a href={spotify_auth_redirect_uri}>Login to Spotify</a>
-        ) : (
-          <div>
-            <button onClick={logout}>Logout</button>
-            <button onClick={getUserInfo}>Get User Info</button>
-            <pre>{JSON.stringify(userInfo, null, 2)}</pre>
-          </div>
-        )}
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Spotify React</h1>
+        <p className={styles.description}>
+          {!token ? (
+            <a href={spotify_auth_redirect_uri}>Login to Spotify</a>
+          ) : (
+            <div>
+              <button onClick={logout}>Logout</button>
+              <button onClick={getUserInfo}>Get User Info</button>
+            </div>
+          )}
+        </p>
       </header>
+      <main className={styles.main}>
+        <pre>{JSON.stringify(userInfo, null, 2)}</pre>
+      </main>
       <br></br>
       <form onSubmit={searchArtists}>
         <input type="text" onChange={(e) => setSearchKey(e.target.value)} />

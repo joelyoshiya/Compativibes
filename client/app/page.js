@@ -1,10 +1,11 @@
-"use client";
+"use client"; // since we are using event listeners to log in and access data for now
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function App() {
   const CLIENT_ID = "2f00ead973024ee8bbca49fa896bd640"; // Your client id
-  const CLIENT_SECRET = process.env.SPOTIFY_SECRET; // Your secret
+  const CLIENT_SECRET = process.env.CLIENT_SECRET; // Your secret
   const REDIRECT_URI = "http://localhost:3000"; // Your redirect uri
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
@@ -12,7 +13,7 @@ export default function App() {
   const [token, setToken] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [artists, setArtists] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -77,6 +78,8 @@ export default function App() {
       })
       .catch((error) => console.log(error));
 
+    const userName = userProfile.data.display_name;
+
     const topArtistsData = await axios
       .get("https://api.spotify.com/v1/me/top/artists", {
         params: { limit: 10 },
@@ -92,7 +95,7 @@ export default function App() {
       (artist) => artist["name"]
     );
 
-    const topTracks = await axios
+    const topTracksData = await axios
       .get("https://api.spotify.com/v1/me/top/tracks", {
         params: { limit: 10 },
         headers: {
@@ -103,7 +106,10 @@ export default function App() {
       })
       .catch((error) => console.log(error));
 
-    setUserInfo({ userProfile, topArtists, topTracks });
+    const topTracks = topTracksData.data.items.map((track) => track["name"]);
+
+    // setUserInfo({ userProfile, topArtistsData, topTracksData });
+    setUserInfo({ userName, topArtists, topTracks });
   };
 
   return (
@@ -120,18 +126,19 @@ export default function App() {
           </div>
         )}
       </header>
+      <br></br>
       <form onSubmit={searchArtists}>
         <input type="text" onChange={(e) => setSearchKey(e.target.value)} />
         <button type={"submit"}>Search</button>
       </form>
       {artists.map((artist) => (
         <div key={artist.id}>
+          {artist.name}
           {artist.images.length ? (
-            <img width={"100%"} src={artist.images[0].url} alt="" />
+            <img width={"50%"} src={artist.images[0].url} alt="" />
           ) : (
             <div>No Image</div>
           )}
-          {artist.name}
         </div>
       ))}
     </div>

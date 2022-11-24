@@ -14,7 +14,9 @@ export default function App() {
   const [token, setToken] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [artists, setArtists] = useState([]);
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState([]);
+  const [topArtists, setTopArtists] = useState([]);
+  const [topTracks, setTopTracks] = useState([]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -120,7 +122,9 @@ export default function App() {
     }));
 
     // setUserInfo({ userProfile, topArtistsData, topTracksData });
-    setUserInfo({ userName, topArtists, topTracks });
+    setUserInfo(userName);
+    setTopArtists(topArtists);
+    setTopTracks(topTracks);
   };
 
   return (
@@ -138,10 +142,38 @@ export default function App() {
           )}
         </p>
       </header>
-      <main className={styles.main}>
-        <pre>{JSON.stringify(userInfo, null, 2)}</pre>
-      </main>
-      <br></br>
+      {userInfo && topArtists && topTracks ? (
+        <main className={styles.main}>
+          <h2 className={styles.title}>Hey {userInfo.userName}</h2>
+          <h2 className={styles.title}>Your top 10 tracks and artists</h2>
+          <div className={styles.grid}>
+            {topArtists.map((artist) => (
+              <div className={styles.card} key={artist.artistName}>
+                <a href={artist.artistUrl}>
+                  <h2>{artist.artistName}</h2>
+                </a>
+                {artist.artistImage && (
+                  <img
+                    className={styles.img}
+                    src={artist.artistImage}
+                    alt={artist.artistName}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          {topTracks.map((track) => (
+            <div key={track.title}>
+              <p>{track.title}</p>
+              <p>{track.artist}</p>
+              <a href={track.songUrl}>Listen to {track.title}</a>
+            </div>
+          ))}
+        </main>
+      ) : (
+        <p> no content</p>
+      )}
+
       <form onSubmit={searchArtists}>
         <input type="text" onChange={(e) => setSearchKey(e.target.value)} />
         <button type={"submit"}>Search</button>

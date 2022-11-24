@@ -113,6 +113,12 @@
   line-height: 1.5;
 }
 
+.card img {
+  width: 50%;
+  height: 50%;
+  max-width: 200px;
+}
+
 .logo {
   height: 1em;
   margin-left: 0.5rem;

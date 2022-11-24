@@ -13,8 +13,8 @@ export default function App() {
 
   const [token, setToken] = useState("");
   const [searchKey, setSearchKey] = useState("");
+  const [userInfo, setUsername] = useState("");
   const [artists, setArtists] = useState([]);
-  const [userInfo, setUserInfo] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
 
@@ -122,7 +122,7 @@ export default function App() {
     }));
 
     // setUserInfo({ userProfile, topArtistsData, topTracksData });
-    setUserInfo(userName);
+    setUsername(userName);
     setTopArtists(topArtists);
     setTopTracks(topTracks);
   };
@@ -142,9 +142,9 @@ export default function App() {
           )}
         </p>
       </header>
-      {userInfo && topArtists && topTracks ? (
+      {topArtists.length && topTracks.length ? (
         <main className={styles.main}>
-          <h2 className={styles.title}>Hey {userInfo.userName}</h2>
+          <h2 className={styles.title}>Hey {userInfo}</h2>
           <h2 className={styles.title}>Your top 10 tracks and artists</h2>
           <div className={styles.grid}>
             {topArtists.map((artist) => (

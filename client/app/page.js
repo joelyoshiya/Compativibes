@@ -162,13 +162,16 @@ export default function App() {
               </div>
             ))}
           </div>
-          {topTracks.map((track) => (
-            <div key={track.title}>
-              <p>{track.title}</p>
-              <p>{track.artist}</p>
-              <a href={track.songUrl}>Listen to {track.title}</a>
-            </div>
-          ))}
+          <div className={styles.grid}>
+            {topTracks.map((track) => (
+              <div className={styles.card} key={track.title}>
+                <a href={track.songUrl}>
+                  <h2>{track.title}</h2>
+                </a>
+                <p>{track.artist}</p>
+              </div>
+            ))}
+          </div>
         </main>
       ) : (
         <p> no content</p>
